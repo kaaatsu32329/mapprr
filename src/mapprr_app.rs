@@ -13,13 +13,13 @@ impl MapprrApp {
             .insert_resource(Server::new())
             .add_plugins(DefaultPlugins)
             .add_plugin(EguiPlugin)
-            .add_system(Self::ui_example_system)
+            .add_system(Self::ui_system)
             .run();
     }
 
     pub fn laserscan() {}
 
-    fn ui_example_system(
+    fn ui_system(
         key_board_input: Res<Input<KeyCode>>,
         mut egui_context: ResMut<EguiContext>,
         mut server: ResMut<Server>,
