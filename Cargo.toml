@@ -10,7 +10,11 @@ bevy = "0.9"
 bevy_egui = "0.19"
 csv = "1"
 egui = "0.20"
+nalgebra = "0.32.1"
 yaml-rust = "0.4.5"
+
+[dev-dependencies]
+assert_approx_eq = "1"
 
 [[bin]]
 name = "mapprr"

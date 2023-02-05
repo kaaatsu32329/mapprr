@@ -110,8 +110,8 @@ impl MapPlotters {
         let current = server.robot_current_localization();
 
         let points = PlotPoints::Owned(vec![PlotPoint {
-            x: current.0,
-            y: current.1,
+            x: current.translation.x,
+            y: current.translation.y,
         }]);
 
         Points::new(points).radius(5.0)
