@@ -1,2 +1,6 @@
+# Cargo file
 /target
 /Cargo.lock
+
+# Sample file
+/sample/rosbag*

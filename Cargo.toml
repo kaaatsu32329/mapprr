@@ -6,3 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+bevy = "0.9"
+bevy_egui = "0.19"
+csv = "1"
+egui = "0.20"
+yaml-rust = "0.4.5"
+
+[[bin]]
+name = "mapprr"
+path = "src/bin/mapprr.rs"
