@@ -30,16 +30,6 @@ impl MapprrApp {
             server.state = !server.state;
         }
 
-        egui::CentralPanel::default().show(egui_context.ctx_mut(), |ui| {
-            Plot::new("cosine").data_aspect(1.).show(ui, |plot_ui| {
-                // plot_ui.points(Self::obstacle_plot_points(server.state))
-                plot_ui.points(server.get_map_point());
-                // plot_ui.line(Self::map_from_csv_as_line())
-                plot_ui.points(server.robot_current_pose_point())
-            });
-            ui.label("sin");
-        });
-
         egui::SidePanel::new(egui::panel::Side::Left, "Controller")
             .width_range(RangeInclusive::new(100f32, 200f32))
             .show(egui_context.ctx_mut(), |_ui| {
@@ -50,10 +40,13 @@ impl MapprrApp {
             .width_range(RangeInclusive::new(100f32, 200f32))
             .show(egui_context.ctx_mut(), |_ui| {});
 
-        egui::TopBottomPanel::new(egui::panel::TopBottomSide::Bottom, "Debug")
-            .show(egui_context.ctx_mut(), |_ui| {});
-
-        egui::TopBottomPanel::new(egui::panel::TopBottomSide::Top, "Header")
-            .show(egui_context.ctx_mut(), |_ui| {});
+        egui::CentralPanel::default().show(egui_context.ctx_mut(), |ui| {
+            Plot::new("cosine").data_aspect(1.).show(ui, |plot_ui| {
+                // plot_ui.points(Self::obstacle_plot_points(server.state))
+                plot_ui.points(server.get_map_point());
+                // plot_ui.line(Self::map_from_csv_as_line())
+                plot_ui.points(server.robot_current_pose_point())
+            });
+        });
     }
 }
