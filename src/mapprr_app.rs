@@ -1,6 +1,6 @@
 use std::ops::RangeInclusive;
 
-use crate::{map_plotter::MapPlotters, server::Server};
+use crate::server::Server;
 use bevy::prelude::*;
 use bevy_egui::{egui, EguiContext, EguiPlugin};
 use egui::plot::Plot;
@@ -33,10 +33,9 @@ impl MapprrApp {
         egui::CentralPanel::default().show(egui_context.ctx_mut(), |ui| {
             Plot::new("cosine").data_aspect(1.).show(ui, |plot_ui| {
                 // plot_ui.points(Self::obstacle_plot_points(server.state))
-                // plot_ui.points(MapPlotters::map_from_csv("sample/circle_sample.csv"));
-                plot_ui.points(MapPlotters::map_from_yaml("sample/ros2_scan_sample.yaml"));
+                plot_ui.points(server.get_map_point());
                 // plot_ui.line(Self::map_from_csv_as_line())
-                plot_ui.points(MapPlotters::robot_current_localization(server))
+                plot_ui.points(server.robot_current_pose_point())
             });
             ui.label("sin");
         });

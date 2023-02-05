@@ -1,4 +1,3 @@
-use bevy::prelude::*;
 use egui::plot::{Line, PlotPoint, PlotPoints, Points};
 use std::fs;
 use yaml_rust::*;
@@ -9,7 +8,7 @@ use crate::server::Server;
 pub struct MapPlotters {}
 
 impl MapPlotters {
-    pub fn parse_yaml_to_vec(path: &str) -> Vec<(f64, f64)> {
+    pub fn parse_yaml_to_vec(&self, path: &str) -> Vec<(f64, f64)> {
         let mut parsed = vec![];
         let data = fs::read_to_string(path).unwrap();
         let docs = YamlLoader::load_from_str(&data).unwrap();
@@ -36,8 +35,8 @@ impl MapPlotters {
     }
 
     // change to PlotItem
-    pub fn map_from_yaml(path: &str) -> Points {
-        let point_cloud = Self::parse_yaml_to_vec(path);
+    pub fn map_from_yaml(&self, path: &str) -> Points {
+        let point_cloud = self.parse_yaml_to_vec(path);
         let length = point_cloud.len();
         let map: PlotPoints = (0..length)
             .map(|i| {
@@ -50,8 +49,8 @@ impl MapPlotters {
         Points::new(map).radius(1.5)
     }
 
-    pub fn map_from_yaml_as_line(path: &str) -> Line {
-        let point_cloud = Self::parse_yaml_to_vec(path);
+    pub fn map_from_yaml_as_line(&self, path: &str) -> Line {
+        let point_cloud = self.parse_yaml_to_vec(path);
         let length = point_cloud.len();
         let map: PlotPoints = (0..length)
             .map(|i| {
@@ -64,7 +63,7 @@ impl MapPlotters {
         Line::new(map)
     }
 
-    pub fn parse_csv_to_vec(path: &str) -> Vec<(f64, f64)> {
+    pub fn parse_csv_to_vec(&self, path: &str) -> Vec<(f64, f64)> {
         let mut parsed = Vec::new();
         let mut csv = csv::Reader::from_path(path).unwrap();
         for element in csv.records() {
@@ -78,8 +77,8 @@ impl MapPlotters {
     }
 
     // change to PlotItem
-    pub fn map_from_csv(path: &str) -> Points {
-        let point_cloud = Self::parse_csv_to_vec(path);
+    pub fn map_from_csv(&self, path: &str) -> Points {
+        let point_cloud = self.parse_csv_to_vec(path);
         let length = point_cloud.len();
         let map: PlotPoints = (0..length)
             .map(|i| {
@@ -92,8 +91,8 @@ impl MapPlotters {
         Points::new(map)
     }
 
-    pub fn map_from_csv_as_line(path: &str) -> Line {
-        let point_cloud = Self::parse_csv_to_vec(path);
+    pub fn map_from_csv_as_line(&self, path: &str) -> Line {
+        let point_cloud = self.parse_csv_to_vec(path);
         let length = point_cloud.len();
         let map: PlotPoints = (0..length)
             .map(|i| {
@@ -106,7 +105,7 @@ impl MapPlotters {
         Line::new(map)
     }
 
-    pub fn robot_current_localization(server: ResMut<Server>) -> Points {
+    pub fn robot_current_localization(&self, server: &Server) -> Points {
         let current = server.robot_current_localization();
 
         let points = PlotPoints::Owned(vec![PlotPoint {
@@ -133,7 +132,8 @@ mod test {
     #[test]
     fn test_parse_yaml_to_vec() {
         let path = "sample/ros2_scan_sample.yaml";
-        let parsed = MapPlotters::parse_yaml_to_vec(path);
+        let plotter = MapPlotters::default();
+        let parsed = plotter.parse_yaml_to_vec(path);
         println!("{:?}", parsed);
     }
 }
