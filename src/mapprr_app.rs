@@ -9,9 +9,17 @@ pub struct MapprrApp {}
 
 impl MapprrApp {
     pub fn run() {
+        let default_plugins = DefaultPlugins.set(WindowPlugin {
+            window: WindowDescriptor {
+                title: "Mapprr".to_string(),
+                ..Default::default()
+            },
+            ..Default::default()
+        });
+
         App::new()
             .insert_resource(Server::new())
-            .add_plugins(DefaultPlugins)
+            .add_plugins(default_plugins)
             .add_plugin(EguiPlugin)
             .add_system(Self::ui_system)
             .run();
